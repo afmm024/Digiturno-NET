@@ -1,3 +1,4 @@
+using DigiturnoAPI.Constanst;
 using DigiturnoAPI.Interfaces;
 using DigiturnoAPI.Models;
 using MongoDB.Driver;
@@ -10,13 +11,21 @@ public class TicketRepository : ITicketRepository
     public TicketRepository(DatabaseProvider databaseProvider)
     {
         _tickets = databaseProvider.GetAccess().GetCollection<Ticket>("tickets");
-    }
+    } 
 
     public async Task<IEnumerable<Ticket>> GetAllTicketsAsync() =>
         await _tickets.Find(ticket => true).ToListAsync();
 
+    public async Task<IEnumerable<Ticket>> GetAllAssignTicketsAsync() => 
+        await _tickets.Find(ticket => ticket.Status.Equals(StatusTicket.Assign)).ToListAsync();
+
+    public async Task<IEnumerable<Ticket>> GetAllAvailableTicketsAsync() => 
+        await _tickets.Find(ticket => ticket.Status.Equals(StatusTicket.Available)).ToListAsync();
+
+    public async Task<IEnumerable<Ticket>> GetAllCloseTicketsAsycn() =>
+        await _tickets.Find(ticket => ticket.Status.Equals(StatusTicket.Close)).ToListAsync();
     public async Task<Ticket> GetTicketByIdAsync(string id) =>
-        await _tickets.Find<Ticket>(ticket => ticket.Id.Equals(id)).FirstOrDefaultAsync();
+        await _tickets.Find(ticket => ticket.Id.Equals(id)).FirstOrDefaultAsync();
 
     public async Task<Ticket> CreateTicketAsync(Ticket ticket)
     {
@@ -33,13 +42,7 @@ public class TicketRepository : ITicketRepository
     public async Task RemoveTicketByIdAsync(string id) =>
         await _tickets.DeleteOneAsync(ticket => ticket.Id.Equals(id));
 
-    public async Task<Ticket> GetTicketAvailableByModuleIdAsync(string moduleId)
-    {
-       return await _tickets.Find<Ticket>(ticket => ticket.ModuleId.Equals(moduleId) && ticket.Status.Equals(StatusTicketEnum.Available)).FirstOrDefaultAsync();
-    }
+    public async Task<Ticket> GetTicketAvailableByModuleIdAsync(string moduleId) => 
+        await _tickets.Find(ticket => ticket.ModuleId.Equals(moduleId) && ticket.Status.Equals(StatusTicket.Available)).FirstOrDefaultAsync();
 
-    public async Task<IEnumerable<Ticket>> GetAllAssingTicketsAsync()
-    {
-        return await _tickets.Find<Ticket>(ticket => ticket.Status.Equals(StatusTicketEnum.Assign)).ToListAsync();
-    }
 }

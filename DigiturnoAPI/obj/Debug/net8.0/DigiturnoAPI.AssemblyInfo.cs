@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DigiturnoAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75d48191deabda5176fc387cada92826658e0918")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c862b4ada2902668c0b56b355edee1b7e8db655f")]
 [assembly: System.Reflection.AssemblyProductAttribute("DigiturnoAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DigiturnoAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

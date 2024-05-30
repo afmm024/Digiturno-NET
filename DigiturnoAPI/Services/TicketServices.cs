@@ -1,5 +1,8 @@
-﻿using DigiturnoAPI.Dtos.Request;
+﻿using DigiturnoAPI.Constanst;
+using DigiturnoAPI.Dtos.Request;
+using DigiturnoAPI.Dtos.Response;
 using DigiturnoAPI.Interfaces;
+using DigiturnoAPI.Mappers;
 using DigiturnoAPI.Models;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -12,12 +15,43 @@ namespace DigiturnoAPI.Services
         private readonly ILogger<TicketServices> _logger;
         private readonly IParamRepository _paramRepository;
         private readonly ITicketRepository _ticketRepository;
+        private readonly TicketMaps _ticketMaps;
 
-        public TicketServices(ILogger<TicketServices> logger, IParamRepository paramRepository, ITicketRepository ticketRepository)
+        public TicketServices(ILogger<TicketServices> logger, IParamRepository paramRepository, ITicketRepository ticketRepository, TicketMaps ticketMaps)
         {
             _logger = logger;
             _paramRepository = paramRepository;
             _ticketRepository = ticketRepository;
+            _ticketMaps = ticketMaps;
+        }
+
+        public async Task<IEnumerable<Ticket>> GetAllAssignTicketAsync()
+        {
+            return await _ticketRepository.GetAllAssignTicketsAsync();
+        }
+
+        public async Task<IEnumerable<Ticket>> GetAllAvailableTicketsAsync()
+        {
+            return await _ticketRepository.GetAllAvailableTicketsAsync();
+        }
+
+        public async Task<IEnumerable<Ticket>> GetAllCloseTicketAsync()
+        {
+            return await _ticketRepository.GetAllCloseTicketsAsycn();
+        }
+
+        public async Task<IEnumerable<Ticket>> GetAllTicketsAsync() =>
+            await _ticketRepository.GetAllTicketsAsync();
+
+        public async Task<IEnumerable<TicketTv>> GetTicketsTvAsync()
+        {
+            List<Ticket> assignTicket = (await GetAllAssignTicketAsync()).ToList();
+            return _ticketMaps.MapsToTicketsTv(assignTicket);
+        }
+
+        public async Task<Ticket> GetAssignTicketAsync(string moduleId)
+        {
+            return await _ticketRepository.GetTicketAvailableByModuleIdAsync(moduleId);
         }
 
         public async Task<string> CreateTicketAsync(TicketRequestDto ticketRequestDto)
@@ -25,13 +59,14 @@ namespace DigiturnoAPI.Services
             Param param = await _paramRepository.GetConsecutiveAsync(ticketRequestDto.Handicapped);
             string firstletter = ticketRequestDto.Handicapped ? "D" : "T";
             string consecutiveNumber = param.Value < 10 ? $"00{param.Value}" : $"0{param.Value}";
-            Ticket ticketData = new Ticket() {
+            Ticket ticketData = new Ticket()
+            {
                 Name = ticketRequestDto.Name,
                 Document = ticketRequestDto.Document,
                 Handicapped = ticketRequestDto.Handicapped,
                 TypeService = ticketRequestDto.TypeService,
-                TicketNumber = $"{firstletter}+ñ{consecutiveNumber}",
-                Status = StatusTicketEnum.Available,
+                TicketNumber = $"{firstletter}{consecutiveNumber}",
+                Status = StatusTicket.Available,
                 ModuleId = "",
                 CreatedAt = DateTime.Now,
                 TicketId = ObjectId.GenerateNewId().ToString(),
@@ -42,35 +77,12 @@ namespace DigiturnoAPI.Services
             await _paramRepository.UpdateConsecutiveAsync(ticketRequestDto.Handicapped);
             return ticketData.TicketNumber;
         }
-
-        public async Task<IEnumerable<Ticket>> GetAllAssignTicketAsync()
+        public async Task<Ticket> UpdateTicketAsync(TicketModuleRequestDto ticketModuleRequestDto)
         {
-            return await _ticketRepository.GetAllAssingTicketsAsync();
-        }
-
-        public async Task<IEnumerable<Ticket>> GetAllAvailableTicketsAsync()
-        {
-            List<Ticket> tickets = (await _ticketRepository.GetAllTicketsAsync()).ToList();
-            return tickets.Where(t => t.Status.Equals(StatusTicketEnum.Available));
-        }
-
-        public async Task<IEnumerable<Ticket>> GetAllTicketAssignAsync()
-        {
-            List<Ticket> tickets = (await _ticketRepository.GetAllTicketsAsync()).ToList();
-            return tickets.Where(t => t.Status.Equals(StatusTicketEnum.Assign));
-        }
-
-        public async Task<Ticket> GetAssignTicketAsync(string moduleId)
-        {
-            return await _ticketRepository.GetTicketAvailableByModuleIdAsync(moduleId);
-        }
-
-        public async Task<Ticket> UpdateTicketAsync(string moduleId, string ticketId, StatusTicketEnum status)
-        {
-            Ticket ticket = await _ticketRepository.GetTicketByIdAsync(ticketId);
-            ticket.Status = status;
-            ticket.ModuleId = moduleId;
-            await _ticketRepository.UpdateTicketAsync(ticketId, ticket);
+            Ticket ticket = await _ticketRepository.GetTicketByIdAsync(ticketModuleRequestDto.Id);
+            ticket.Status = ticketModuleRequestDto.Status;
+            ticket.ModuleId = ticketModuleRequestDto.moduleId;
+            await _ticketRepository.UpdateTicketAsync(ticketModuleRequestDto.Id, ticket);
             return ticket;
         }
     }

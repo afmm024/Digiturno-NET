@@ -21,7 +21,7 @@ namespace DigiturnoAPI.Models
         [BsonElement("ticketNumber")]
         public string TicketNumber { get; set; }
         [BsonElement("status")]
-        public StatusTicketEnum Status { get; set; }
+        public string Status { get; set; }
         [BsonElement("ticketId")]
         public string TicketId { get; set; }
         [BsonElement("moduleId")]
@@ -29,15 +29,5 @@ namespace DigiturnoAPI.Models
         [BsonElement("createdAt")]
         [BsonRepresentation(BsonType.DateTime)]
         public DateTime CreatedAt { get; set; }
-    }
-
-    public enum StatusTicketEnum
-    {
-        [Description("Available")]
-        Available,
-        [Description("Assign")]
-        Assign,
-        [Description("Finalice")]
-        Finalice
     }
 }

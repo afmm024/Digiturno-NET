@@ -6,5 +6,6 @@ namespace DigiturnoAPI.Interfaces
     {
         Task<Param> GetConsecutiveAsync(bool isHandicapped);
         Task UpdateConsecutiveAsync(bool isHandicapped);
+        Task<Param> CreateParamAsync();
     }
 }

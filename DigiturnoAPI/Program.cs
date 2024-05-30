@@ -2,6 +2,7 @@ using DigiturnoAPI.Hubs;
 using DigiturnoAPI.Services;
 using DigiturnoAPI.Interfaces;
 using DigiturnoAPI;
+using DigiturnoAPI.Mappers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<ITicketServices, TicketServices>();
 builder.Services.AddScoped<IParamRepository, ParamRepository>();
 builder.Services.AddScoped<DatabaseProvider>();
+builder.Services.AddScoped<TicketMaps>();
 builder.Services.AddSignalR();
 builder.Services.AddMemoryCache();
 
@@ -32,11 +34,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<HubDigiturno>("/hub");
+
+
+app.MapHub<HubDigiturno>("/ticketsHub");
 
 app.Run();

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DigiturnoAPI.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 
 namespace DigiturnoAPI.Controllers
@@ -8,37 +9,48 @@ namespace DigiturnoAPI.Controllers
     public class ParamController : ControllerBase
     {
 
-       
+        private readonly IParamRepository _paramRepository;
 
-        [HttpGet]
-        public IEnumerable<string> Get()
+        public ParamController(IParamRepository paramRepository)
         {
-            return new string[] { "value1", "value2" };
+            _paramRepository = paramRepository;
         }
 
-        // GET api/<ParamController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("param")]
+        public async Task<ActionResult> GetParam([FromQuery] bool isHandicapped)
         {
-            return "value";
+            return Ok(await _paramRepository.GetConsecutiveAsync(isHandicapped));
         }
 
-        // POST api/<ParamController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+        [HttpPost("param")]
+        public async Task<ActionResult> CreateParam()
         {
+            return StatusCode(201, await _paramRepository.CreateParamAsync());
         }
 
-        // PUT api/<ParamController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //// GET api/<ParamController>/5
+        //[HttpGet("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
-        // DELETE api/<ParamController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        //// POST api/<ParamController>
+        //[HttpPost]
+        //public void Post([FromBody] string value)
+        //{
+        //}
+
+        //// PUT api/<ParamController>/5
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
+
+        //// DELETE api/<ParamController>/5
+        //[HttpDelete("{id}")]
+        //public void Delete(int id)
+        //{
+        //}
     }
 }
