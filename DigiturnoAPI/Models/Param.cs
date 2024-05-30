@@ -8,17 +8,22 @@ public class Param
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
+    [BsonElement("_id")]
     public string? Id { get; set; }
-    public StatusTicket Type { get; set; }
+    [BsonElement("type")]
+    public TypeTicketEnum Type { get; set; }
+    [BsonElement("value")]
     public int Value { get; set; }
 
+    [BsonRepresentation(BsonType.DateTime)]
+    [BsonElement("createdAt")]
+    public DateTime CreatedAt { get; set; }
+
 }
-public enum StatusTicket
+public enum TypeTicketEnum
 {
-    [Description("Available")]
-    Available,
-    [Description("Assigned")]
-    Assigned,
-    [Description("Attended")]
-    Attended,
+    [Description("ticket_queue")]
+    Ticket_queue,
+    [Description("handicapped_queue")]
+    Handicapped_queue,
 }

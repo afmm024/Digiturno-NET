@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using DigiturnoAPI.Interfaces;
-using DigiturnoAPI.Models;
+using DigiturnoAPI.Dtos.Request;
 
 namespace DigiturnoAPI.Controllers
 {
@@ -10,7 +10,6 @@ namespace DigiturnoAPI.Controllers
     {
 
         private readonly ITicketServices _ticketServices;
-        // private readonly ILogger<WeatherForecastController> _logger;
         
         public TicketController(ITicketServices ticketServices)
         {
@@ -20,17 +19,13 @@ namespace DigiturnoAPI.Controllers
         [HttpPost("ticket")]
         public async Task<IActionResult> CreateTicket(TicketRequestDto ticketDto)
         {
-            //await _ticketServices.CreateTicket(ticketDto);
-
-            return Ok(ticketDto);
+            return Ok(await _ticketServices.CreateTicketAsync(ticketDto));
         }
 
-        [HttpGet("ticket")]
+        [HttpGet("ticket/active")]
         public async Task<IActionResult> GetTickets()
         {
-            var tickets = await _ticketServices.Get();
-
-            return Ok(tickets);
+            return Ok(await _ticketServices.GetAllAvailableTicketsAsync());
         }
     }
 }

@@ -1,14 +1,14 @@
+﻿using DigiturnoAPI.Dtos.Request;
 using DigiturnoAPI.Models;
 
 namespace DigiturnoAPI.Interfaces
 {
     public interface ITicketServices
     {
-        Task<List<Ticket>> Get();
-        Task<Ticket> Get(string id);
-        Task<Ticket> Create(Ticket ticket);
-        Task Update(string id, Ticket ticketIn);
-        Task Remove(Ticket ticketIn);
-        Task Remove(string id);
+        Task<string> CreateTicketAsync(TicketRequestDto ticketRequestDto);
+        Task<Ticket> UpdateTicketAsync(string moduleId, string ticketId, StatusTicketEnum status);
+        Task<IEnumerable<Ticket>> GetAllAvailableTicketsAsync();
+        Task<IEnumerable<Ticket>> GetAllAssignTicketAsync();
+        Task<Ticket> GetAssignTicketAsync(string moduleId);
     }
 }

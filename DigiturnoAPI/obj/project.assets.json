@@ -1623,25 +1623,33 @@
     ]
   },
   "packageFolders": {
-    "/Users/andresfelipemunozmarin/.nuget/packages/": {}
+    "C:\\Users\\camm0\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/andresfelipemunozmarin/Documents/GitHub/digiturno/DigiturnoAPI/DigiturnoAPI.csproj",
+      "projectUniqueName": "C:\\Users\\camm0\\Desktop\\Digiturno-NET\\DigiturnoAPI\\DigiturnoAPI.csproj",
       "projectName": "DigiturnoAPI",
-      "projectPath": "/Users/andresfelipemunozmarin/Documents/GitHub/digiturno/DigiturnoAPI/DigiturnoAPI.csproj",
-      "packagesPath": "/Users/andresfelipemunozmarin/.nuget/packages/",
-      "outputPath": "/Users/andresfelipemunozmarin/Documents/GitHub/digiturno/DigiturnoAPI/obj/",
+      "projectPath": "C:\\Users\\camm0\\Desktop\\Digiturno-NET\\DigiturnoAPI\\DigiturnoAPI.csproj",
+      "packagesPath": "C:\\Users\\camm0\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\camm0\\Desktop\\Digiturno-NET\\DigiturnoAPI\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      ],
       "configFilePaths": [
-        "/Users/andresfelipemunozmarin/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\camm0\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -1705,7 +1713,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.204/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

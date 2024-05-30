@@ -1,4 +1,4 @@
-using DigiturnoAPI.Models;
+using DigiturnoAPI.Dtos.Request;
 
 namespace DigiturnoAPI.Interfaces
 {

@@ -16,7 +16,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.Configure<DBSettings>(
     builder.Configuration.GetSection("DBSettings"));
-builder.Services.AddScoped<ITicketServices, TicketsService>();
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<ITicketServices, TicketServices>();
+builder.Services.AddScoped<IParamRepository, ParamRepository>();
 builder.Services.AddScoped<DatabaseProvider>();
 builder.Services.AddSignalR();
 builder.Services.AddMemoryCache();

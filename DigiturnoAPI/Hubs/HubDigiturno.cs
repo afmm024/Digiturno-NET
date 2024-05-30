@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.SignalR;
 using DigiturnoAPI.Interfaces;
 using Microsoft.Extensions.Caching.Memory;
-using DigiturnoAPI.Models;
+using DigiturnoAPI.Dtos.Request;
 
 namespace DigiturnoAPI.Hubs
 {

@@ -1,4 +1,6 @@
-namespace DigiturnoAPI.Models
+using DigiturnoAPI.Models;
+
+namespace DigiturnoAPI.Dtos.Request
 {
     public class TicketRequestDto
     {
@@ -8,6 +10,6 @@ namespace DigiturnoAPI.Models
 
         public bool Handicapped { get; set; }
 
-        public string TypeService { get; set;}
+        public string TypeService { get; set; }
     }
 }
